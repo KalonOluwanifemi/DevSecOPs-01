@@ -2,9 +2,14 @@
 version: '1.0'
 security:
   ignore-vulnerabilities:
-    # WERKZEUG - Windows-only path traversal (doesn't affect Linux)
     - id: '73969'   # CVE-2024-49766 (Windows path traversal)
       reason: 'Windows-specific vulnerability. Our infrastructure runs on Linux containers.'
+    
+    - id: '73889'   # CVE-2024-49767 (multipart form parser DOS)
+      reason: 'Our app does not accept file uploads. Low risk.'
+    
+    - id: '71594'   # CVE-2024-34069 (debugger PIN exposure)
+      reason: 'Debug mode is disabled in production. Low risk.'
     
     - id: '86908'   # CVE-2026-27199 (Windows device names)
       reason: 'Windows-specific vulnerability. Linux deployment.'
@@ -15,14 +20,6 @@ security:
     - id: '84324'   # CVE-2026-21860 (Windows reserved names)
       reason: 'Windows-specific vulnerability. Linux deployment.'
     
-    # WERKZEUG - DOS vulnerabilities (requires specific attack vectors)
-    - id: '73889'   # CVE-2024-49767 (multipart form parser DOS)
-      reason: 'Our app does not accept file uploads. Low risk.'
-    
-    - id: '71594'   # CVE-2024-34069 (debugger PIN exposure)
-      reason: 'Debug mode is disabled in production. Low risk.'
-    
-    # JINJA2 - Sandbox escapes (requires attacker control over templates)
     - id: '76378'   # CVE-2024-56326 (str.format sandbox escape)
       reason: 'We do not accept user-provided templates. Templates are hardcoded.'
     
@@ -35,6 +32,5 @@ security:
     - id: '75976'   # CVE-2025-27516 (|attr filter sandbox escape)
       reason: 'We do not accept user-provided templates. Templates are hardcoded.'
     
-    # FLASK - Session header bypass
     - id: '86909'   # CVE-2026-27205 (Vary header missing)
       reason: 'We use JWT tokens instead of Flask sessions. Not affected.'
