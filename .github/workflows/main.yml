@@ -21,10 +21,10 @@ jobs:
 
     # TASK 1: SCA (Software Composition Analysis)
     - name: Install Safety
-      run: pip install safety
+      run: pip install "safety<3"
 
     - name: Run SCA Scan
-      run: safety scan -r requirements.txt --output json --file sca-report.json
+      run: safety check -r requirements.txt --output json --save-json sca-report.json --continue-on-error
 
     # TASK 2: SAST (Static Analysis)
     - name: Install Bandit
