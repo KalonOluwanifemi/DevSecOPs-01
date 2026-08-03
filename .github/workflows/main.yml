@@ -23,8 +23,8 @@ jobs:
     - name: Install Safety
       run: pip install safety
 
-    - name: Run SCA Scan
-      run: safety check -r requirements.txt --full-report
+    - name: Run SCA Scan with Policy
+      run: safety scan -r requirements.txt --policy-file .safety-policy.yml --output json --file sca-report.json
 
     # TASK 2: SAST (Static Analysis)
     - name: Install Bandit
